@@ -1,0 +1,27 @@
+name: goit-rdb-hw-05
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: goit-rdb-hw-05-mysql
+    restart: unless-stopped
+
+    command: ["--secure-file-priv=/var/lib/mysql-files", "--log-bin-trust-function-creators=1"]
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root_local_2026
+      MYSQL_DATABASE: goit_rdb_hw_03
+      MYSQL_USER: goit_hw_05
+      MYSQL_PASSWORD: goit_hw_05_local
+
+    ports:
+      - "127.0.0.1:3309:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+      - ./database/csv:/var/lib/mysql-files
+      - ./database/queries:/queries:ro
+
+volumes:
+  mysql_data:
